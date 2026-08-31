@@ -1,0 +1,42 @@
+package com.ecommerce.app;
+
+public abstract class Product {
+    protected String productID;
+    protected String name;
+    protected double price;
+    protected int stock;
+    protected double rating;
+
+    public Product(String productID, String name, double price, int stock) {
+        this.productID = productID;
+        this.name = name;
+        this.price = price;
+        this.stock = stock;
+        this.rating = 4.0;
+    }
+
+    public abstract double getDiscount();
+
+    public double getFinalPrice() {
+        return price - getDiscount();
+    }
+
+    public void reduceStock(int qty) throws OutOfStockException {
+        if (this.stock < qty) {
+            throw new OutOfStockException("Not enough stock available for " + name + ".");
+        }
+        this.stock -= qty;
+    }
+
+    public String getProductID() { return productID; }
+    public String getName() { return name; }
+    public double getPrice() { return price; }
+    public int getStock() { return stock; }
+    public double getRating() { return rating; }
+    public void setStock(int stock) { this.stock = stock; }
+
+    @Override
+    public String toString() {
+        return name + " (Rs " + String.format("%.2f", price) + ")";
+    }
+}
